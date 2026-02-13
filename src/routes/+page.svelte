@@ -27,7 +27,7 @@
 	// Updated benchmarks from actual research data
 	const models = [
 		{ id: 'shinso', name: 'Shinso', short: 'Shinso', overall: 73.9, compilation: 94.2, functional: 73.9, testPass: 71.3, testsPerContract: 12.4, color: '#3B82F6', gradient: 'from-blue-500 to-cyan-400', highlight: true },
-		{ id: 'claude', name: 'Claude 4.1.5 Sonnet', short: 'Claude 4.1.5', org: 'Anthropic', overall: 45.6, compilation: 68.2, functional: 45.6, testPass: 42.1, testsPerContract: 1.0, color: '#A855F7', gradient: 'from-purple-500 to-purple-400' },
+		{ id: 'claude', name: 'Claude 4.5 Sonnet', short: 'Claude 4.5', org: 'Anthropic', overall: 45.6, compilation: 68.2, functional: 45.6, testPass: 42.1, testsPerContract: 1.0, color: '#A855F7', gradient: 'from-purple-500 to-purple-400' },
 		{ id: 'gemini3', name: 'Gemini 3 Pro Preview', short: 'Gemini 3 Pro', org: 'Google', overall: 33.7, compilation: 52.8, functional: 33.7, testPass: 30.4, testsPerContract: 1.0, color: '#6366F1', gradient: 'from-indigo-500 to-indigo-400' },
 		{ id: 'gemini25', name: 'Gemini 2.5', short: 'Gemini 2.5', org: 'Google', overall: 28.6, compilation: 44.1, functional: 28.6, testPass: 25.2, testsPerContract: 1.0, color: '#8B5CF6', gradient: 'from-violet-500 to-violet-400' },
 		{ id: 'qwen', name: 'Qwen3 Coder', short: 'Qwen3 Coder', org: 'Alibaba', overall: 21.9, compilation: 36.4, functional: 21.9, testPass: 18.7, testsPerContract: 1.0, color: '#F59E0B', gradient: 'from-amber-500 to-amber-400' },
@@ -425,7 +425,7 @@
 								<div class="space-y-1.5">
 									{#each [
 										{ name: 'Shinso', val: cat.shinso, model: models[0] },
-										{ name: 'Claude 4.1.5', val: cat.claude, model: models[1] },
+										{ name: 'Claude 4.5', val: cat.claude, model: models[1] },
 										{ name: 'Gemini 3 Pro', val: cat.gemini3, model: models[2] },
 										{ name: 'Gemini 2.5', val: cat.gemini25, model: models[3] },
 										{ name: 'Qwen3', val: cat.qwen, model: models[4] },
