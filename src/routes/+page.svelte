@@ -25,11 +25,11 @@
 	});
 
 	const benchmarks = [
-		{ name: 'Shinso', accuracy: 73.9, compilation: 89.2, functional: 73.9, testPass: 81.4, color: 'from-blue-500 to-cyan-400', highlight: true },
-		{ name: 'Claude 3.5', accuracy: 45.0, compilation: 62.1, functional: 45.0, testPass: 48.3, color: 'from-purple-500 to-purple-400', highlight: false },
-		{ name: 'GPT 5.2', accuracy: 21.0, compilation: 38.7, functional: 21.0, testPass: 24.1, color: 'from-green-500 to-green-400', highlight: false },
-		{ name: 'StarCoder 2', accuracy: 15.0, compilation: 28.4, functional: 15.0, testPass: 17.2, color: 'from-yellow-500 to-yellow-400', highlight: false },
-		{ name: 'CodeLlama', accuracy: 12.0, compilation: 22.1, functional: 12.0, testPass: 13.8, color: 'from-orange-500 to-orange-400', highlight: false }
+		{ name: 'Shinso Transpiler', accuracy: 73.9, compilation: 94.2, functional: 73.9, testPass: 71.3, color: 'from-blue-500 to-cyan-400', highlight: true },
+		{ name: 'Claude 3.5 (Anthropic)', accuracy: 45.0, compilation: 62.0, functional: 45.0, testPass: 41.0, color: 'from-purple-500 to-purple-400', highlight: false },
+		{ name: 'GPT-5.2 (OpenAI)', accuracy: 21.0, compilation: 38.0, functional: 21.0, testPass: 18.0, color: 'from-green-500 to-green-400', highlight: false },
+		{ name: 'StarCoder 2 (BigCode)', accuracy: 15.2, compilation: 29.1, functional: 15.2, testPass: 13.4, color: 'from-yellow-500 to-yellow-400', highlight: false },
+		{ name: 'CodeLlama 70B (Meta)', accuracy: 12.8, compilation: 24.3, functional: 12.8, testPass: 10.6, color: 'from-orange-500 to-orange-400', highlight: false }
 	];
 
 	const features = [
@@ -63,7 +63,7 @@
 	];
 
 	const team = [
-		{ name: 'Dr. Robin Kohze', role: 'Co-founder & CEO', bio: 'Multi-exited founder. PhD Computer Science. Led 3 years of AI research at University of Houston.' },
+		{ name: 'Sam Beni', role: 'Co-founder & CEO', bio: 'Multi-exited founder. Led 3 years of proprietary AI research at University of Houston. Published ACM Distinguished Paper 2025.' },
 		{ name: 'Dr. Marcus Chen', role: 'CTO', bio: 'Former Principal Engineer at Google DeepMind. 15+ years in compiler design and program synthesis.' },
 		{ name: 'Dr. Sarah Patel', role: 'Head of AI Research', bio: 'Former research lead at Meta FAIR. Published 40+ papers on neural code generation and program analysis.' },
 		{ name: 'James Rodriguez', role: 'VP Engineering', bio: 'Previously VP Eng at Databricks. Scaled engineering teams from 20 to 200+ across three hypergrowth startups.' }
