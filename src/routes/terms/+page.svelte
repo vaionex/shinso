@@ -1,6 +1,6 @@
 <svelte:head>
 	<title>Terms & Conditions — Shinso AI</title>
-	<link rel="icon" type="image/svg+xml" href="/icon.svg" />
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 	<meta name="description" content="Shinso AI Terms and Conditions governing use of shinso.ai and related services." />
 	<meta property="og:title" content="Terms & Conditions — Shinso AI" />
 	<meta property="og:description" content="Shinso AI Terms and Conditions governing use of shinso.ai and related services." />
@@ -16,9 +16,8 @@
 
 <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#050508]/80 backdrop-blur-xl">
 	<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-		<a href="/" class="flex items-center gap-2.5">
-			<img src="/icon.svg" alt="Shinso" class="h-8 w-8" />
-			<span class="text-lg font-bold text-white tracking-tight">Shinso</span>
+		<a href="/" class="shinso-wordmark text-[22px] font-semibold text-white tracking-[-0.04em]">
+			Shinso<span class="text-blue-400">.</span>
 		</a>
 		<a href="/" class="text-[13px] text-gray-400 transition-colors hover:text-white">← Back to Home</a>
 	</div>
@@ -184,10 +183,9 @@
 
 <footer class="border-t border-white/5 py-8 sm:py-12">
 	<div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
-		<div class="flex items-center gap-2.5">
-			<img src="/icon.svg" alt="Shinso" class="h-6 w-6" />
-			<span class="text-sm font-semibold text-gray-500">Shinso AI</span>
-		</div>
+		<a href="/" class="shinso-wordmark text-base font-semibold text-gray-500 tracking-[-0.04em]">
+			Shinso<span class="text-gray-600">.</span>
+		</a>
 		<p class="text-xs text-gray-600">© 2025 Shinso AI, Inc. All rights reserved.</p>
 	</div>
 </footer>
