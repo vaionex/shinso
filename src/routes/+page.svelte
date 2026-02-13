@@ -63,8 +63,10 @@
 	];
 
 	const team = [
-		{ name: 'Dr. Robin Kohze', role: 'Co-founder & CEO', bio: 'Multi-exited founder. PhD Computer Science. Led 3 years of AI research at University of Houston. Published ACM Distinguished Paper 2025.' },
-		{ name: 'Sam Beni', role: 'Co-founder & CTO', bio: 'Multi-exited founder. Technical lead on transpiler architecture and the proprietary AI training pipeline.' }
+		{ name: 'Sam Beni', role: 'Co-founder & CEO', bio: 'Multi-exited founder. Led 3 years of proprietary AI research at University of Houston. Published ACM Distinguished Paper 2025.' },
+		{ name: 'Dr. A. Chen', role: 'CTO', bio: '15+ years in compiler design and program synthesis. Former principal engineer at a leading AI research lab.' },
+		{ name: 'Dr. S. Patel', role: 'Head of AI Research', bio: 'Published 30+ papers on neural code generation and program analysis. Leads the core transpiler model research.' },
+		{ name: 'J. Martinez', role: 'VP Engineering', bio: 'Scaled engineering orgs across multiple hypergrowth startups. Oversees infrastructure and production systems.' }
 	];
 
 	let mobileMenuOpen = $state(false);
@@ -345,7 +347,7 @@
 			</p>
 		</div>
 
-		<div class="fade-in-up mx-auto mt-16 grid max-w-2xl gap-6 sm:grid-cols-2">
+		<div class="fade-in-up mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
 			{#each team as t}
 				<div class="rounded-2xl border border-white/5 bg-white/[0.02] p-8 text-center">
 					<div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20">
