@@ -4,6 +4,66 @@
 	let formState = $state('idle'); // idle | submitting | success
 	let formData = $state({ name: '', email: '', company: '', role: '', useCase: '', volume: '', message: '' });
 
+	// Calculator state
+	let calcLines = $state(1_000_000);
+	let calcLangs = $state(2);
+	let calcVerification = $state('standard');
+
+	// Pricing tiers (per line)
+	// Base: $0.02/line, volume discounts, language pair multiplier, verification tier
+	const getPrice = (lines, langs, verification) => {
+		// Base per-line rate with volume discount
+		let rate;
+		if (lines >= 50_000_000) rate = 0.006;
+		else if (lines >= 10_000_000) rate = 0.009;
+		else if (lines >= 5_000_000) rate = 0.012;
+		else if (lines >= 1_000_000) rate = 0.018;
+		else if (lines >= 100_000) rate = 0.025;
+		else rate = 0.035;
+
+		// Language pairs multiplier (each additional pair adds 60%)
+		const langMultiplier = 1 + (langs - 1) * 0.6;
+
+		// Verification tier
+		const verificationMultiplier = verification === 'standard' ? 1.0 : verification === 'enhanced' ? 1.4 : 1.8;
+
+		const total = lines * rate * langMultiplier * verificationMultiplier;
+		return { rate, total, langMultiplier, verificationMultiplier };
+	};
+
+	$effect(() => {
+		// Clamp values
+		if (calcLines < 10_000) calcLines = 10_000;
+		if (calcLines > 100_000_000) calcLines = 100_000_000;
+		if (calcLangs < 1) calcLangs = 1;
+		if (calcLangs > 8) calcLangs = 8;
+	});
+
+	let calcResult = $derived(getPrice(calcLines, calcLangs, calcVerification));
+
+	const formatNum = (n) => {
+		if (n >= 1_000_000) return (n / 1_000_000).toFixed(n % 1_000_000 === 0 ? 0 : 1) + 'M';
+		if (n >= 1_000) return (n / 1_000).toFixed(0) + 'K';
+		return n.toString();
+	};
+
+	const formatCurrency = (n) => {
+		if (n >= 1_000_000) return '$' + (n / 1_000_000).toFixed(1) + 'M';
+		if (n >= 1_000) return '$' + (n / 1_000).toFixed(0) + 'K';
+		return '$' + n.toFixed(0);
+	};
+
+	const langOptions = [
+		'Python', 'TypeScript', 'Rust', 'Go', 'C++', 'Java', 'Solidity', 'Move'
+	];
+
+	const presets = [
+		{ label: 'Startup', lines: 100_000, langs: 2, verification: 'standard' },
+		{ label: 'Growth', lines: 1_000_000, langs: 3, verification: 'standard' },
+		{ label: 'Enterprise', lines: 10_000_000, langs: 4, verification: 'enhanced' },
+		{ label: 'Foundation Model', lines: 50_000_000, langs: 6, verification: 'full' }
+	];
+
 	onMount(() => { mounted = true; });
 
 	function handleSubmit(e) {
@@ -84,7 +144,7 @@
 		</a>
 		<div class="flex items-center gap-6">
 			<a href="/" class="text-[13px] text-gray-400 transition-colors hover:text-white hidden sm:block">← Back to Home</a>
-			<a href="#apply" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/25">Apply Now</a>
+			<a href="#apply" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/25">Get Access</a>
 		</div>
 	</div>
 </nav>
@@ -136,6 +196,168 @@
 					{/if}
 				</div>
 			{/each}
+		</div>
+	</div>
+</section>
+
+<!-- Dataset Calculator -->
+<section class="relative border-t border-white/5 py-24 sm:py-32 bg-grid">
+	<div class="pointer-events-none absolute top-0 left-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-cyan-500/[0.03] blur-[100px]"></div>
+	<div class="relative mx-auto max-w-7xl px-6">
+		<div class="mx-auto max-w-3xl text-center mb-12">
+			<div class="mb-4 text-sm font-semibold uppercase tracking-wider text-cyan-400">Pricing</div>
+			<h2 class="text-3xl sm:text-4xl font-bold text-white">Dataset Calculator</h2>
+			<p class="mt-4 text-gray-400 max-w-xl mx-auto">
+				Commission custom code datasets — verified, production-grade translations that have never been seen on GitHub or public repositories. Purpose-built training data for your models.
+			</p>
+		</div>
+
+		<div class="grid gap-6 lg:grid-cols-5">
+			<!-- Left: Controls -->
+			<div class="lg:col-span-3 rounded-2xl border border-white/5 bg-[#0a0a12] p-6 sm:p-8">
+				<!-- Presets -->
+				<div class="mb-8">
+					<div class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">Quick Presets</div>
+					<div class="flex flex-wrap gap-2">
+						{#each presets as p}
+							<button
+								class="rounded-lg px-4 py-2 text-sm font-medium transition-all {calcLines === p.lines && calcLangs === p.langs ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/5'}"
+								onclick={() => { calcLines = p.lines; calcLangs = p.langs; calcVerification = p.verification; }}
+							>
+								{p.label}
+							</button>
+						{/each}
+					</div>
+				</div>
+
+				<!-- Lines slider -->
+				<div class="mb-8">
+					<div class="flex items-baseline justify-between mb-3">
+						<label class="text-sm font-medium text-gray-300">Lines of Code</label>
+						<span class="text-lg font-bold text-white tabular-nums">{formatNum(calcLines)}</span>
+					</div>
+					<input
+						type="range"
+						min="10000"
+						max="100000000"
+						step="10000"
+						bind:value={calcLines}
+						class="w-full accent-blue-500 h-2 bg-white/10 rounded-full appearance-none cursor-pointer slider"
+					/>
+					<div class="flex justify-between mt-1.5 text-[10px] text-gray-600">
+						<span>10K</span>
+						<span>100K</span>
+						<span>1M</span>
+						<span>10M</span>
+						<span>100M</span>
+					</div>
+				</div>
+
+				<!-- Language pairs -->
+				<div class="mb-8">
+					<div class="flex items-baseline justify-between mb-3">
+						<label class="text-sm font-medium text-gray-300">Language Pairs</label>
+						<span class="text-lg font-bold text-white tabular-nums">{calcLangs}</span>
+					</div>
+					<input
+						type="range"
+						min="1"
+						max="8"
+						step="1"
+						bind:value={calcLangs}
+						class="w-full accent-blue-500 h-2 bg-white/10 rounded-full appearance-none cursor-pointer slider"
+					/>
+					<div class="flex flex-wrap gap-1.5 mt-3">
+						{#each langOptions.slice(0, calcLangs) as lang}
+							<span class="rounded-md bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 text-[11px] font-medium text-blue-400">{lang}</span>
+						{/each}
+					</div>
+				</div>
+
+				<!-- Verification tier -->
+				<div>
+					<label class="text-sm font-medium text-gray-300 mb-3 block">Verification Level</label>
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+						{#each [
+							{ id: 'standard', name: 'Standard', desc: 'Compilation verified', mult: '1.0×' },
+							{ id: 'enhanced', name: 'Enhanced', desc: '+ Functional tests', mult: '1.4×' },
+							{ id: 'full', name: 'Full', desc: '+ Formal verification', mult: '1.8×' }
+						] as tier}
+							<button
+								class="rounded-xl p-4 text-left transition-all border {calcVerification === tier.id ? 'border-blue-500/40 bg-blue-500/10' : 'border-white/5 bg-white/[0.02] hover:border-white/10'}"
+								onclick={() => calcVerification = tier.id}
+							>
+								<div class="flex items-center justify-between mb-1">
+									<span class="text-sm font-medium {calcVerification === tier.id ? 'text-white' : 'text-gray-400'}">{tier.name}</span>
+									<span class="text-[10px] font-bold {calcVerification === tier.id ? 'text-blue-400' : 'text-gray-600'}">{tier.mult}</span>
+								</div>
+								<span class="text-xs text-gray-500">{tier.desc}</span>
+							</button>
+						{/each}
+					</div>
+				</div>
+			</div>
+
+			<!-- Right: Price summary -->
+			<div class="lg:col-span-2 space-y-4">
+				<!-- Total -->
+				<div class="rounded-2xl border border-blue-500/20 bg-gradient-to-br from-blue-500/[0.06] to-cyan-500/[0.03] p-6 sm:p-8">
+					<div class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Estimated Cost</div>
+					<div class="text-4xl sm:text-5xl font-bold text-white tabular-nums tracking-tight">
+						{formatCurrency(calcResult.total)}
+					</div>
+					<div class="text-sm text-gray-400 mt-2">
+						{formatNum(calcLines)} lines × {calcLangs} language pair{calcLangs > 1 ? 's' : ''}
+					</div>
+
+					<div class="mt-6 pt-6 border-t border-white/5 space-y-3">
+						<div class="flex justify-between text-sm">
+							<span class="text-gray-500">Base rate</span>
+							<span class="text-white font-medium tabular-nums">${calcResult.rate.toFixed(3)}/line</span>
+						</div>
+						<div class="flex justify-between text-sm">
+							<span class="text-gray-500">Lang pair multiplier</span>
+							<span class="text-white font-medium tabular-nums">{calcResult.langMultiplier.toFixed(1)}×</span>
+						</div>
+						<div class="flex justify-between text-sm">
+							<span class="text-gray-500">Verification</span>
+							<span class="text-white font-medium tabular-nums">{calcResult.verificationMultiplier.toFixed(1)}×</span>
+						</div>
+					</div>
+
+					<a href="#apply" class="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-blue-500 hover:shadow-xl hover:shadow-blue-500/25">
+						Request This Dataset
+						<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+					</a>
+				</div>
+
+				<!-- What's included -->
+				<div class="rounded-2xl border border-white/5 bg-white/[0.02] p-6">
+					<div class="text-sm font-medium text-white mb-4">Every dataset includes</div>
+					<div class="space-y-3">
+						{#each [
+							'Novel code — never on GitHub or public repos',
+							'Verified compilation for every translation pair',
+							'Parallel source ↔ target aligned corpora',
+							'Generated test suites per translation',
+							'Deduplication against public datasets',
+							'Machine-readable format (JSONL / Parquet)'
+						] as item}
+							<div class="flex gap-2.5 items-start">
+								<svg class="h-4 w-4 text-cyan-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+								<span class="text-xs text-gray-400">{item}</span>
+							</div>
+						{/each}
+					</div>
+				</div>
+
+				<!-- Volume note -->
+				<div class="rounded-xl bg-white/[0.02] border border-white/5 p-4">
+					<p class="text-[11px] text-gray-500 leading-relaxed">
+						Pricing is indicative. Final quotes depend on language complexity, domain specificity, and delivery timeline. Datasets over 10M lines include dedicated support and custom SLA. <strong class="text-gray-400">All data is generated fresh and guaranteed unseen by public models.</strong>
+					</p>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
