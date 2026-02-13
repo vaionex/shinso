@@ -91,10 +91,26 @@
 	<title>Shinso AI — The Data Engine for Code Intelligence</title>
 	<link rel="icon" type="image/svg+xml" href="/icon.svg" />
 	<meta name="description" content="Shinso's agentic code transpiler achieves 73.9% accuracy — 3.5x better than GPT. We generate production-viable code translations at scale to power the next generation of AI models." />
+	<!-- Open Graph -->
 	<meta property="og:title" content="Shinso AI — The Data Engine for Code Intelligence" />
 	<meta property="og:description" content="73.9% functional correctness. 3.5× better than GPT. The only AI producing production-viable code translations." />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://shinso.ai" />
+	<meta property="og:image" content="https://shinso.ai/og.png" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta property="og:image:type" content="image/png" />
+	<meta property="og:site_name" content="Shinso AI" />
+	<meta property="og:locale" content="en_US" />
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Shinso AI — The Data Engine for Code Intelligence" />
+	<meta name="twitter:description" content="73.9% functional correctness. 3.5× better than GPT. The only AI producing production-viable code translations." />
+	<meta name="twitter:image" content="https://shinso.ai/og.png" />
+	<meta name="twitter:site" content="@shinsoai" />
+	<!-- Additional -->
+	<meta name="theme-color" content="#050508" />
+	<link rel="canonical" href="https://shinso.ai" />
 </svelte:head>
 
 <!-- Nav -->

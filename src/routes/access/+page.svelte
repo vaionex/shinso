@@ -60,6 +60,20 @@
 	<title>Get Access — Shinso AI</title>
 	<link rel="icon" type="image/svg+xml" href="/icon.svg" />
 	<meta name="description" content="Request early access to Shinso's AI code translation platform. Learn about our approval process and start translating code at production-grade accuracy." />
+	<meta property="og:title" content="Get Access — Shinso AI" />
+	<meta property="og:description" content="Request early access to Shinso's AI code translation platform. Approval-based onboarding for enterprise and research teams." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://shinso.ai/access" />
+	<meta property="og:image" content="https://shinso.ai/og.png" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta property="og:site_name" content="Shinso AI" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Get Access — Shinso AI" />
+	<meta name="twitter:description" content="Request early access to Shinso's AI code translation platform." />
+	<meta name="twitter:image" content="https://shinso.ai/og.png" />
+	<meta name="theme-color" content="#050508" />
+	<link rel="canonical" href="https://shinso.ai/access" />
 </svelte:head>
 
 <!-- Nav (shared) -->

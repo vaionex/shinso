@@ -2,6 +2,16 @@
 	<title>Terms & Conditions — Shinso AI</title>
 	<link rel="icon" type="image/svg+xml" href="/icon.svg" />
 	<meta name="description" content="Shinso AI Terms and Conditions governing use of shinso.ai and related services." />
+	<meta property="og:title" content="Terms & Conditions — Shinso AI" />
+	<meta property="og:description" content="Shinso AI Terms and Conditions governing use of shinso.ai and related services." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://shinso.ai/terms" />
+	<meta property="og:image" content="https://shinso.ai/og.png" />
+	<meta property="og:site_name" content="Shinso AI" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:image" content="https://shinso.ai/og.png" />
+	<meta name="theme-color" content="#050508" />
+	<link rel="canonical" href="https://shinso.ai/terms" />
 </svelte:head>
 
 <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#050508]/80 backdrop-blur-xl">
