@@ -35,12 +35,12 @@
 	const features = [
 		{
 			title: 'Multi-Language Support',
-			desc: 'Seamlessly translate between Rust, Python, TypeScript, Go, C++, and more with production-grade accuracy across 15+ language pairs.',
+			desc: 'Seamlessly translate between Solidity, Rust, Python, TypeScript, Go, C++, Java, and Move with production-grade accuracy across 15+ language pairs.',
 			icon: 'M4 6h16M4 12h16M4 18h7'
 		},
 		{
 			title: 'Agentic Self-Healing Pipeline',
-			desc: 'Multi-step verification with automated error correction. Our agentic system iterates until output compiles and passes tests.',
+			desc: 'Proprietary agentic pipeline with multi-pass verification and automated error correction. Self-healing code generation iterates until output compiles and passes tests.',
 			icon: 'M13 10V3L4 14h7v7l9-11h-7z'
 		},
 		{
@@ -63,10 +63,8 @@
 	];
 
 	const team = [
-		{ name: 'Sam Beni', role: 'Co-founder & CEO', bio: 'Multi-exited founder. Led 3 years of proprietary AI research at University of Houston. Published ACM Distinguished Paper 2025.' },
-		{ name: 'Dr. Marcus Chen', role: 'CTO', bio: 'Former Principal Engineer at Google DeepMind. 15+ years in compiler design and program synthesis.' },
-		{ name: 'Dr. Sarah Patel', role: 'Head of AI Research', bio: 'Former research lead at Meta FAIR. Published 40+ papers on neural code generation and program analysis.' },
-		{ name: 'James Rodriguez', role: 'VP Engineering', bio: 'Previously VP Eng at Databricks. Scaled engineering teams from 20 to 200+ across three hypergrowth startups.' }
+		{ name: 'Dr. Robin Kohze', role: 'Co-founder & CEO', bio: 'Multi-exited founder. PhD Computer Science. Led 3 years of AI research at University of Houston. Published ACM Distinguished Paper 2025.' },
+		{ name: 'Sam Beni', role: 'Co-founder & CTO', bio: 'Multi-exited founder. Technical lead on transpiler architecture and the proprietary AI training pipeline.' }
 	];
 
 	let mobileMenuOpen = $state(false);
@@ -80,7 +78,7 @@
 </script>
 
 <svelte:head>
-	<title>Shinso AI — The World's Most Accurate Code Transpiler</title>
+	<title>Shinso AI — Production-Grade AI Code Translation</title>
 </svelte:head>
 
 <!-- Navigation -->
@@ -347,7 +345,7 @@
 			</p>
 		</div>
 
-		<div class="fade-in-up mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+		<div class="fade-in-up mx-auto mt-16 grid max-w-2xl gap-6 sm:grid-cols-2">
 			{#each team as t}
 				<div class="rounded-2xl border border-white/5 bg-white/[0.02] p-8 text-center">
 					<div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20">
