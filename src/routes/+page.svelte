@@ -920,6 +920,9 @@
 			<img src="/icon.svg" alt="Shinso" class="h-6 w-6" />
 			<span class="text-sm font-semibold text-gray-500">Shinso AI</span>
 		</div>
-		<p class="text-xs text-gray-600">© 2025 Shinso AI, Inc. All rights reserved.</p>
+		<div class="flex items-center gap-4">
+			<a href="/terms" class="text-xs text-gray-600 hover:text-gray-400 transition-colors">Terms</a>
+			<p class="text-xs text-gray-600">© 2025 Shinso AI, Inc. All rights reserved.</p>
+		</div>
 	</div>
 </footer>

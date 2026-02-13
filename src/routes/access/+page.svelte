@@ -285,7 +285,7 @@
 				</button>
 
 				<p class="mt-4 text-center text-xs text-gray-600">
-					By submitting, you agree to our terms of service. We'll never share your information with third parties.
+					By submitting, you agree to our <a href="/terms" class="text-blue-400 hover:text-blue-300 underline">terms of service</a>. We'll never share your information with third parties.
 				</p>
 			</form>
 		{/if}
@@ -321,6 +321,9 @@
 			</div>
 			<span class="text-sm font-semibold text-gray-500">Shinso AI</span>
 		</div>
-		<p class="text-xs text-gray-600">© 2025 Shinso AI, Inc. All rights reserved.</p>
+		<div class="flex items-center gap-4">
+			<a href="/terms" class="text-xs text-gray-600 hover:text-gray-400 transition-colors">Terms</a>
+			<p class="text-xs text-gray-600">© 2025 Shinso AI, Inc. All rights reserved.</p>
+		</div>
 	</div>
 </footer>
