@@ -109,7 +109,7 @@
 			{#each navItems as item}
 				<a href={item.href} class="text-[13px] text-gray-400 transition-colors hover:text-white">{item.label}</a>
 			{/each}
-			<a href="#contact" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/25">Get Access</a>
+			<a href="/access" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/25">Get Access</a>
 		</div>
 		<button class="md:hidden text-gray-400 p-2" onclick={() => mobileMenuOpen = !mobileMenuOpen} aria-label="Menu">
 			{#if mobileMenuOpen}
@@ -150,7 +150,7 @@
 		</p>
 
 		<div class="fade-in-up mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row" class:visible={mounted} style="transition-delay: 0.3s">
-			<a href="#contact" class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-8 py-4 text-base font-semibold text-white transition-all hover:bg-blue-500 hover:shadow-2xl hover:shadow-blue-500/25">
+			<a href="/access" class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-8 py-4 text-base font-semibold text-white transition-all hover:bg-blue-500 hover:shadow-2xl hover:shadow-blue-500/25">
 				Request Demo
 				<svg class="h-4 w-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
 			</a>
@@ -902,7 +902,7 @@
 				Whether you're training frontier models or migrating enterprise codebases, Shinso delivers the verified code data and translations you need.
 			</p>
 			<div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-				<a href="mailto:sam@shinso.ai" class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-8 py-4 text-base font-semibold text-white transition-all hover:bg-blue-500 hover:shadow-2xl hover:shadow-blue-500/25">
+				<a href="/access" class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-8 py-4 text-base font-semibold text-white transition-all hover:bg-blue-500 hover:shadow-2xl hover:shadow-blue-500/25">
 					Request Early Access
 					<svg class="h-4 w-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
 				</a>
