@@ -66,6 +66,7 @@
 		{ label: 'Benchmarks', href: '#benchmarks' },
 		{ label: 'Data Engine', href: '#data-engine' },
 		{ label: 'Technology', href: '#technology' },
+		{ label: 'Roadmap', href: '#roadmap' },
 		{ label: 'Team', href: '#team' }
 	];
 
@@ -687,6 +688,141 @@
 					</div>
 				{/each}
 			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ============ ROADMAP TO 99% ============ -->
+<section id="roadmap" class="relative border-t border-white/5 py-24 sm:py-32 overflow-hidden">
+	<div class="pointer-events-none absolute top-1/2 left-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/[0.03] blur-[120px]"></div>
+	<div class="relative mx-auto max-w-7xl px-6">
+		<div class="fade-in-up mx-auto max-w-3xl text-center">
+			<div class="mb-4 text-sm font-semibold uppercase tracking-wider text-indigo-400">Architecture</div>
+			<h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">Roadmap to 99% Accuracy</h2>
+			<p class="mt-6 text-base sm:text-lg text-gray-400 leading-relaxed">
+				3 years of competitive advantage. A multi-stage agentic pipeline that combines specialized models, formal verification, and reinforcement learning — each layer compounding accuracy.
+			</p>
+		</div>
+
+		<!-- Architecture overview — abstracted -->
+		<div class="fade-in-up mt-16 grid gap-6 grid-cols-1 lg:grid-cols-3">
+
+			<!-- Left: Multi-Agent Pipeline -->
+			<div class="rounded-2xl border border-indigo-500/10 bg-indigo-500/[0.03] p-6 sm:p-8">
+				<div class="flex items-center gap-3 mb-5">
+					<div class="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/10">
+						<svg class="h-5 w-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" /></svg>
+					</div>
+					<h3 class="text-lg font-semibold text-white">Multi-Agent Pipeline</h3>
+				</div>
+				<p class="text-sm text-gray-400 mb-6">Specialized agents work in sequence — each one handling a different dimension of code translation.</p>
+				<div class="space-y-3">
+					{#each [
+						{ step: 'Security Analysis', desc: 'Detect vulnerabilities and anti-patterns' },
+						{ step: 'Repair Planning', desc: 'Architect the optimal translation strategy' },
+						{ step: 'Code Generation', desc: 'Produce target-language output' },
+						{ step: 'Iterative Refinement', desc: 'Self-correct until compilation succeeds' }
+					] as item, i}
+						<div class="flex items-start gap-3">
+							<div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-indigo-500/10 text-[10px] font-bold text-indigo-400">{i + 1}</div>
+							<div>
+								<div class="text-sm font-medium text-white">{item.step}</div>
+								<div class="text-xs text-gray-500">{item.desc}</div>
+							</div>
+						</div>
+						{#if i < 3}
+							<div class="ml-3 h-2 border-l border-dashed border-indigo-500/20"></div>
+						{/if}
+					{/each}
+				</div>
+			</div>
+
+			<!-- Center: Hybrid Verification -->
+			<div class="rounded-2xl border border-white/5 bg-white/[0.02] p-6 sm:p-8">
+				<div class="flex items-center gap-3 mb-5">
+					<div class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/10">
+						<svg class="h-5 w-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>
+					</div>
+					<h3 class="text-lg font-semibold text-white">Formal Verification</h3>
+				</div>
+				<p class="text-sm text-gray-400 mb-6">Every translation is verified through multiple independent signals — not just "does it look right."</p>
+				<div class="space-y-3">
+					{#each [
+						{ step: 'AST & Type Analysis', desc: 'Deep structural parsing of source code' },
+						{ step: 'Intermediate Representation', desc: 'Language-agnostic typed IR preserves semantics' },
+						{ step: 'Compiler Feedback Loops', desc: 'Real compiler and prover signals guide generation' },
+						{ step: 'Agentic Repair Pass', desc: 'Fix anti-patterns and preserve semantic equivalence' }
+					] as item, i}
+						<div class="flex items-start gap-3">
+							<div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-blue-500/10 text-[10px] font-bold text-blue-400">{i + 1}</div>
+							<div>
+								<div class="text-sm font-medium text-white">{item.step}</div>
+								<div class="text-xs text-gray-500">{item.desc}</div>
+							</div>
+						</div>
+						{#if i < 3}
+							<div class="ml-3 h-2 border-l border-dashed border-blue-500/20"></div>
+						{/if}
+					{/each}
+				</div>
+			</div>
+
+			<!-- Right: Accuracy Roadmap -->
+			<div class="rounded-2xl border border-white/5 bg-white/[0.02] p-6 sm:p-8">
+				<div class="flex items-center gap-3 mb-5">
+					<div class="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/10">
+						<svg class="h-5 w-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" /></svg>
+					</div>
+					<h3 class="text-lg font-semibold text-white">Accuracy Roadmap</h3>
+				</div>
+				<p class="text-sm text-gray-400 mb-6">6 months from production. Each milestone compounds on the last.</p>
+
+				<!-- Milestone bars -->
+				<div class="space-y-4">
+					<div>
+						<div class="flex items-baseline justify-between mb-1.5">
+							<span class="text-xs font-medium text-gray-400">M1 – M2</span>
+							<span class="text-lg font-bold text-blue-400">75%</span>
+						</div>
+						<div class="h-3 w-full rounded-full bg-white/5 overflow-hidden">
+							<div class="h-full rounded-full bg-gradient-to-r from-blue-600 to-blue-400" style="width: 75%"></div>
+						</div>
+						<p class="text-[11px] text-gray-600 mt-1">Baseline translator + compile loop integration</p>
+					</div>
+					<div>
+						<div class="flex items-baseline justify-between mb-1.5">
+							<span class="text-xs font-medium text-gray-400">M3 – M4</span>
+							<span class="text-lg font-bold text-indigo-400">85%</span>
+						</div>
+						<div class="h-3 w-full rounded-full bg-white/5 overflow-hidden">
+							<div class="h-full rounded-full bg-gradient-to-r from-indigo-600 to-indigo-400" style="width: 85%"></div>
+						</div>
+						<p class="text-[11px] text-gray-600 mt-1">Agentic repair + formal prover integration</p>
+					</div>
+					<div>
+						<div class="flex items-baseline justify-between mb-1.5">
+							<span class="text-xs font-medium text-gray-400">M5 – M6</span>
+							<span class="text-lg font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">90–99%</span>
+						</div>
+						<div class="h-3 w-full rounded-full bg-white/5 overflow-hidden">
+							<div class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-400" style="width: 95%"></div>
+						</div>
+						<p class="text-[11px] text-gray-600 mt-1">RL with compiler signals + model tuning + test harness</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Bottom callout -->
+		<div class="fade-in-up mt-8 rounded-2xl border border-indigo-500/10 bg-indigo-500/[0.03] p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8">
+			<div class="shrink-0">
+				<div class="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10">
+					<svg class="h-6 w-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
+				</div>
+			</div>
+			<p class="text-sm text-gray-300 leading-relaxed">
+				<strong class="text-white">Why this can't be replicated.</strong> Shinso's architecture isn't a prompt wrapper — it's a vertically integrated system of specialized models, proprietary training data, and formal verification built over 3 years. Each layer reinforces the next. Competitors would need to rebuild the entire stack from scratch.
+			</p>
 		</div>
 	</div>
 </section>
