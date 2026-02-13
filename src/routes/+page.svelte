@@ -70,10 +70,9 @@
 	];
 
 	const team = [
-		{ name: 'Sam Beni', role: 'Co-founder & CEO', bio: 'Multi-exited founder. Led 3 years of proprietary AI research at University of Houston. Published ACM Distinguished Paper 2025.', initials: 'SB' },
-		{ name: 'Dr. A. Chen', role: 'CTO', bio: '15+ years in compiler design and program synthesis. Former principal engineer at a leading AI research lab.', initials: 'AC' },
-		{ name: 'Dr. S. Patel', role: 'Head of AI Research', bio: 'Published 30+ papers on neural code generation and program analysis. Leads the core transpiler model research.', initials: 'SP' },
-		{ name: 'J. Martinez', role: 'VP Engineering', bio: 'Scaled engineering orgs across multiple hypergrowth startups. Oversees infrastructure and production systems.', initials: 'JM' }
+		{ name: 'Sam Beni', role: 'CEO', bio: 'Pioneer of "Complex AI." Accelerated 49 unicorns.', logos: ['Tech Nation', 'Intel AI', 'Imperial'], initials: 'SB' },
+		{ name: 'Elod Varga', role: 'CTO', bio: 'Built, launched, and exited 2× successful tech protocols.', logos: ['Taraxa', 'EWOR'], initials: 'EV' },
+		{ name: 'Dr. Rabimba Karanjai', role: 'CSO / CAIO', bio: 'World-renowned AI language translation researcher.', logos: ['U of Houston', 'Google', 'PayPal'], initials: 'RK' }
 	];
 
 	function getHeatColor(val) {
@@ -703,15 +702,20 @@
 			</p>
 		</div>
 
-		<div class="fade-in-up mt-16 grid gap-4 sm:gap-6 grid-cols-2 lg:grid-cols-4">
+		<div class="fade-in-up mt-16 grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-3">
 			{#each team as t}
 				<div class="rounded-2xl border border-white/5 bg-white/[0.02] p-6 sm:p-8 text-center">
-					<div class="mx-auto mb-5 flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20">
-						<span class="text-xl sm:text-2xl font-bold text-blue-400">{t.initials}</span>
+					<div class="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20">
+						<span class="text-2xl font-bold text-blue-400">{t.initials}</span>
 					</div>
-					<h3 class="text-sm sm:text-base font-semibold text-white">{t.name}</h3>
-					<div class="mt-1 text-xs sm:text-sm font-medium text-blue-400">{t.role}</div>
-					<p class="mt-3 text-xs sm:text-sm leading-relaxed text-gray-500">{t.bio}</p>
+					<h3 class="text-base font-semibold text-white">{t.name}</h3>
+					<div class="mt-1 text-sm font-medium text-blue-400">{t.role}</div>
+					<p class="mt-3 text-sm leading-relaxed text-gray-500">{t.bio}</p>
+					<div class="mt-4 flex flex-wrap justify-center gap-x-3 gap-y-1">
+						{#each t.logos as logo}
+							<span class="text-[11px] font-medium text-gray-600">{logo}</span>
+						{/each}
+					</div>
 				</div>
 			{/each}
 		</div>
