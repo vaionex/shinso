@@ -318,7 +318,6 @@
 	<div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
 		<div class="flex items-center gap-2.5">
 			<img src="/icon.svg" alt="Shinso" class="h-6 w-6" />
-			</div>
 			<span class="text-sm font-semibold text-gray-500">Shinso AI</span>
 		</div>
 		<div class="flex items-center gap-4">
