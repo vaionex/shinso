@@ -70,3 +70,12 @@ body {
 .stat-reveal {
 	animation: countUp 0.8s ease-out forwards;
 }
+
+/* Hide scrollbar for tab nav */
+.scrollbar-hide {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+	display: none;
+}

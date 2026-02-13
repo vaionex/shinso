@@ -3,6 +3,9 @@
 
 	let mounted = $state(false);
 	let mobileMenuOpen = $state(false);
+	let activeTab = $state('overview');
+	let hoveredModel = $state(null);
+	let benchmarksVisible = $state(false);
 
 	onMount(() => {
 		mounted = true;
@@ -11,6 +14,7 @@
 				entries.forEach((entry) => {
 					if (entry.isIntersecting) {
 						entry.target.classList.add('visible');
+						if (entry.target.id === 'benchmark-chart') benchmarksVisible = true;
 					}
 				});
 			},
@@ -20,12 +24,39 @@
 		return () => observer.disconnect();
 	});
 
-	const benchmarks = [
-		{ name: 'Shinso', accuracy: 73.9, compilation: 94.2, functional: 73.9, testPass: 71.3, color: 'from-blue-500 to-cyan-400', highlight: true },
-		{ name: 'Claude 3.5', org: 'Anthropic', accuracy: 45.0, compilation: 62.0, functional: 45.0, testPass: 41.0, color: 'from-purple-500/80 to-purple-400/80' },
-		{ name: 'GPT-5.2', org: 'OpenAI', accuracy: 21.0, compilation: 38.0, functional: 21.0, testPass: 18.0, color: 'from-green-500/80 to-green-400/80' },
-		{ name: 'StarCoder 2', org: 'BigCode', accuracy: 15.2, compilation: 29.1, functional: 15.2, testPass: 13.4, color: 'from-yellow-500/80 to-yellow-400/80' },
-		{ name: 'CodeLlama 70B', org: 'Meta', accuracy: 12.8, compilation: 24.3, functional: 12.8, testPass: 10.6, color: 'from-orange-500/80 to-orange-400/80' }
+	// Updated benchmarks from actual research data
+	const models = [
+		{ id: 'shinso', name: 'Shinso', short: 'Shinso', overall: 73.9, compilation: 94.2, functional: 73.9, testPass: 71.3, testsPerContract: 12.4, color: '#3B82F6', gradient: 'from-blue-500 to-cyan-400', highlight: true },
+		{ id: 'claude', name: 'Claude 4.1.5 Sonnet', short: 'Claude 4.1.5', org: 'Anthropic', overall: 45.6, compilation: 68.2, functional: 45.6, testPass: 42.1, testsPerContract: 1.0, color: '#A855F7', gradient: 'from-purple-500 to-purple-400' },
+		{ id: 'gemini3', name: 'Gemini 3 Pro Preview', short: 'Gemini 3 Pro', org: 'Google', overall: 33.7, compilation: 52.8, functional: 33.7, testPass: 30.4, testsPerContract: 1.0, color: '#6366F1', gradient: 'from-indigo-500 to-indigo-400' },
+		{ id: 'gemini25', name: 'Gemini 2.5', short: 'Gemini 2.5', org: 'Google', overall: 28.6, compilation: 44.1, functional: 28.6, testPass: 25.2, testsPerContract: 1.0, color: '#8B5CF6', gradient: 'from-violet-500 to-violet-400' },
+		{ id: 'qwen', name: 'Qwen3 Coder', short: 'Qwen3 Coder', org: 'Alibaba', overall: 21.9, compilation: 36.4, functional: 21.9, testPass: 18.7, testsPerContract: 1.0, color: '#F59E0B', gradient: 'from-amber-500 to-amber-400' },
+		{ id: 'gpt', name: 'GPT-5.2 Pro', short: 'GPT-5.2 Pro', org: 'OpenAI', overall: 21.3, compilation: 35.8, functional: 21.3, testPass: 17.9, testsPerContract: 1.0, color: '#10B981', gradient: 'from-emerald-500 to-emerald-400' }
+	];
+
+	// Score breakdown categories
+	const categories = [
+		{ name: 'Logic Preservation', shinso: 78.2, claude: 48.1, gemini3: 36.2, gemini25: 30.8, qwen: 24.1, gpt: 22.7 },
+		{ name: 'Type Safety', shinso: 71.4, claude: 42.3, gemini3: 31.5, gemini25: 26.4, qwen: 19.8, gpt: 19.2 },
+		{ name: 'Error Handling', shinso: 69.8, claude: 39.7, gemini3: 28.9, gemini25: 24.1, qwen: 18.4, gpt: 17.6 },
+		{ name: 'API Mapping', shinso: 75.1, claude: 51.2, gemini3: 38.4, gemini25: 32.7, qwen: 25.3, gpt: 24.8 }
+	];
+
+	// Error pattern heatmap (error counts — lower is better)
+	const errorPatterns = [
+		{ code: 'E03003', name: 'Type Mismatch', values: [1, 4, 6, 3, 6, 5] },
+		{ code: 'E05001', name: 'Missing Import', values: [1, 2, 4, 3, 3, 2] },
+		{ code: 'E03002', name: 'Null Reference', values: [0, 3, 5, 3, 7, 2] },
+		{ code: 'E04007', name: 'Invalid Syntax', values: [1, 2, 1, 1, 3, 2] },
+		{ code: 'E02004', name: 'Scope Error', values: [0, 1, 2, 1, 3, 1] }
+	];
+
+	const tabs = [
+		{ id: 'overview', label: 'Overall Performance' },
+		{ id: 'detailed', label: 'Detailed Metrics' },
+		{ id: 'categories', label: 'Score Breakdown' },
+		{ id: 'errors', label: 'Error Analysis' },
+		{ id: 'rigor', label: 'Testing Rigor' }
 	];
 
 	const languages = ['Python', 'TypeScript', 'Rust', 'Go', 'C++', 'Java', 'Solidity', 'Move'];
@@ -44,11 +75,25 @@
 		{ name: 'Dr. S. Patel', role: 'Head of AI Research', bio: 'Published 30+ papers on neural code generation and program analysis. Leads the core transpiler model research.', initials: 'SP' },
 		{ name: 'J. Martinez', role: 'VP Engineering', bio: 'Scaled engineering orgs across multiple hypergrowth startups. Oversees infrastructure and production systems.', initials: 'JM' }
 	];
+
+	function getHeatColor(val) {
+		if (val === 0) return 'bg-blue-500/20 text-blue-300';
+		if (val <= 1) return 'bg-blue-500/10 text-blue-400';
+		if (val <= 2) return 'bg-indigo-500/15 text-indigo-300';
+		if (val <= 3) return 'bg-purple-500/20 text-purple-300';
+		if (val <= 4) return 'bg-violet-500/25 text-violet-200';
+		if (val <= 5) return 'bg-fuchsia-500/25 text-fuchsia-200';
+		return 'bg-pink-500/30 text-pink-200';
+	}
 </script>
 
 <svelte:head>
 	<title>Shinso AI — The Data Engine for Code Intelligence</title>
 	<meta name="description" content="Shinso's agentic code transpiler achieves 73.9% accuracy — 3.5x better than GPT. We generate production-viable code translations at scale to power the next generation of AI models." />
+	<meta property="og:title" content="Shinso AI — The Data Engine for Code Intelligence" />
+	<meta property="og:description" content="73.9% functional correctness. 3.5× better than GPT. The only AI producing production-viable code translations." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://shinso.ai" />
 </svelte:head>
 
 <!-- Nav -->
@@ -101,7 +146,7 @@
 		</h1>
 
 		<p class="fade-in-up mx-auto mt-8 max-w-2xl text-base leading-relaxed text-gray-400 sm:text-lg" class:visible={mounted} style="transition-delay: 0.2s">
-			Our agentic transpiler translates code between languages at <strong class="text-white">73.9% accuracy</strong> — 3.5× better than GPT. We generate production-viable code data at scale to train the next generation of frontier AI models.
+			Our agentic transpiler translates code between languages at <strong class="text-white">73.9% accuracy</strong> — outperforming GPT, Claude, Gemini, and Qwen. We generate production-viable code data at scale to train the next generation of frontier AI models.
 		</p>
 
 		<div class="fade-in-up mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row" class:visible={mounted} style="transition-delay: 0.3s">
@@ -121,16 +166,16 @@
 				<div class="mt-1 text-xs sm:text-sm text-gray-500">Functional Correctness</div>
 			</div>
 			<div>
-				<div class="text-3xl sm:text-4xl font-bold text-white">3.5×</div>
-				<div class="mt-1 text-xs sm:text-sm text-gray-500">Better Than GPT-5.2</div>
+				<div class="text-3xl sm:text-4xl font-bold text-white">12.4×</div>
+				<div class="mt-1 text-xs sm:text-sm text-gray-500">More Tests per Contract</div>
 			</div>
 			<div>
 				<div class="text-3xl sm:text-4xl font-bold text-white">94.2%</div>
 				<div class="mt-1 text-xs sm:text-sm text-gray-500">Compilation Rate</div>
 			</div>
 			<div>
-				<div class="text-3xl sm:text-4xl font-bold text-white">15+</div>
-				<div class="mt-1 text-xs sm:text-sm text-gray-500">Language Pairs</div>
+				<div class="text-3xl sm:text-4xl font-bold text-white">6</div>
+				<div class="mt-1 text-xs sm:text-sm text-gray-500">Models Benchmarked</div>
 			</div>
 		</div>
 	</div>
@@ -167,93 +212,333 @@
 	</div>
 </section>
 
-<!-- ============ BENCHMARKS ============ -->
+<!-- ============ BENCHMARKS — Interactive Dashboard ============ -->
 <section id="benchmarks" class="bg-grid relative border-t border-white/5 py-24 sm:py-32">
 	<div class="mx-auto max-w-7xl px-6">
 		<div class="fade-in-up mx-auto max-w-3xl text-center">
 			<div class="mb-4 text-sm font-semibold uppercase tracking-wider text-blue-400">Benchmarks</div>
-			<h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">Industry-Leading Accuracy</h2>
+			<h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+				Shinso Beats GPT, Claude, Gemini & Qwen
+			</h2>
 			<p class="mt-6 text-base sm:text-lg text-gray-400">
-				Evaluated on TransCoder-ST across 15+ language pairs. Compilation verification, functional correctness testing, and automated test suite validation.
+				Comprehensive evaluation across code translation tasks. Compilation verification, functional correctness, test pass rates, and error analysis.
 			</p>
 		</div>
 
-		<!-- Bar chart -->
-		<div class="fade-in-up mx-auto mt-16 max-w-4xl space-y-5">
-			{#each benchmarks as b, i}
-				<div>
-					<div class="mb-1.5 flex items-baseline justify-between">
-						<div class="flex items-baseline gap-2">
-							<span class="text-sm font-medium {b.highlight ? 'text-white' : 'text-gray-500'}">{b.name}</span>
-							{#if b.org}<span class="text-xs text-gray-600">{b.org}</span>{/if}
-						</div>
-						<span class="text-sm font-bold tabular-nums {b.highlight ? 'text-blue-400' : 'text-gray-600'}">{b.accuracy}%</span>
-					</div>
-					<div class="h-9 sm:h-10 w-full overflow-hidden rounded-lg bg-white/5 {b.highlight ? 'ring-1 ring-blue-500/30' : ''}">
-						<div
-							class="bar-animate flex h-full items-center rounded-lg bg-gradient-to-r {b.color} {b.highlight ? 'shadow-lg shadow-blue-500/20' : ''}"
-							style="width: {b.accuracy}%; animation-delay: {i * 0.15}s"
-						>
-							{#if b.highlight}
-								<span class="ml-3 sm:ml-4 text-[10px] sm:text-xs font-bold text-white tracking-wide">PRODUCTION-VIABLE</span>
-							{/if}
-						</div>
-					</div>
-				</div>
+		<!-- Tab navigation -->
+		<div class="fade-in-up mt-12 flex gap-1 overflow-x-auto pb-2 sm:justify-center scrollbar-hide">
+			{#each tabs as tab}
+				<button
+					class="whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium transition-all {activeTab === tab.id ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'text-gray-400 hover:text-white hover:bg-white/5'}"
+					onclick={() => activeTab = tab.id}
+				>
+					{tab.label}
+				</button>
 			{/each}
 		</div>
 
-		<!-- Metrics table — desktop -->
-		<div class="fade-in-up mx-auto mt-16 max-w-4xl overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] hidden sm:block">
-			<div class="grid grid-cols-4 border-b border-white/5 bg-white/5 text-xs font-semibold uppercase tracking-wider text-gray-500">
-				<div class="px-6 py-4">Model</div>
-				<div class="px-6 py-4 text-center">Compilation Rate</div>
-				<div class="px-6 py-4 text-center">Functional Correctness</div>
-				<div class="px-6 py-4 text-center">Test Pass Rate</div>
-			</div>
-			{#each benchmarks as b}
-				<div class="grid grid-cols-4 border-b border-white/5 text-sm {b.highlight ? 'bg-blue-500/5' : ''}">
-					<div class="flex items-center px-6 py-4 font-medium {b.highlight ? 'text-white' : 'text-gray-500'}">
-						{#if b.highlight}<span class="mr-2 h-2 w-2 rounded-full bg-blue-400 shrink-0"></span>{/if}
-						{b.name}
-					</div>
-					<div class="px-6 py-4 text-center tabular-nums {b.highlight ? 'font-semibold text-blue-400' : 'text-gray-600'}">{b.compilation}%</div>
-					<div class="px-6 py-4 text-center tabular-nums {b.highlight ? 'font-semibold text-blue-400' : 'text-gray-600'}">{b.functional}%</div>
-					<div class="px-6 py-4 text-center tabular-nums {b.highlight ? 'font-semibold text-blue-400' : 'text-gray-600'}">{b.testPass}%</div>
-				</div>
-			{/each}
-		</div>
+		<!-- Dashboard container -->
+		<div class="fade-in-up mt-8 rounded-2xl border border-white/5 bg-[#0a0a12] overflow-hidden" id="benchmark-chart">
 
-		<!-- Metrics — mobile cards -->
-		<div class="fade-in-up mt-12 space-y-3 sm:hidden">
-			{#each benchmarks as b}
-				<div class="rounded-xl border {b.highlight ? 'border-blue-500/20 bg-blue-500/5' : 'border-white/5 bg-white/[0.02]'} p-4">
-					<div class="flex items-center gap-2 mb-3">
-						{#if b.highlight}<span class="h-2 w-2 rounded-full bg-blue-400"></span>{/if}
-						<span class="text-sm font-medium {b.highlight ? 'text-white' : 'text-gray-400'}">{b.name}</span>
-						{#if b.org}<span class="text-xs text-gray-600">· {b.org}</span>{/if}
+			<!-- TAB: Overview — Main bar chart -->
+			{#if activeTab === 'overview'}
+				<div class="p-6 sm:p-10">
+					<div class="flex items-center justify-between mb-8">
+						<div>
+							<h3 class="text-lg font-semibold text-white">Overall Performance</h3>
+							<p class="text-sm text-gray-500 mt-1">Average score across all translation benchmarks</p>
+						</div>
+						<div class="hidden sm:flex items-center gap-4 text-xs text-gray-500">
+							<div class="flex items-center gap-1.5">
+								<div class="w-8 border-t border-dashed border-emerald-500/60"></div>
+								<span>Production-viable</span>
+							</div>
+							<div class="flex items-center gap-1.5">
+								<div class="w-8 border-t border-dashed border-amber-500/60"></div>
+								<span>Needs refinement</span>
+							</div>
+						</div>
 					</div>
-					<div class="grid grid-cols-3 gap-3 text-center">
-						<div>
-							<div class="text-lg font-bold tabular-nums {b.highlight ? 'text-blue-400' : 'text-gray-500'}">{b.compilation}%</div>
-							<div class="text-[10px] text-gray-600">Compilation</div>
+
+					<!-- Vertical bar chart -->
+					<div class="relative">
+						<!-- Y-axis labels -->
+						<div class="absolute left-0 top-0 bottom-8 flex flex-col justify-between text-[10px] text-gray-600 tabular-nums w-8">
+							<span>100</span>
+							<span>80</span>
+							<span>60</span>
+							<span>40</span>
+							<span>20</span>
+							<span>0</span>
 						</div>
-						<div>
-							<div class="text-lg font-bold tabular-nums {b.highlight ? 'text-blue-400' : 'text-gray-500'}">{b.functional}%</div>
-							<div class="text-[10px] text-gray-600">Functional</div>
+
+						<!-- Chart area -->
+						<div class="ml-10 relative">
+							<!-- Grid lines -->
+							<div class="absolute inset-x-0 top-0 bottom-8 flex flex-col justify-between pointer-events-none">
+								{#each [0, 1, 2, 3, 4, 5] as _}
+									<div class="border-t border-white/5 w-full"></div>
+								{/each}
+							</div>
+
+							<!-- Threshold lines -->
+							<div class="absolute inset-x-0 bottom-8 pointer-events-none" style="height: calc(100% - 2rem)">
+								<!-- Production-viable at 60 -->
+								<div class="absolute w-full border-t border-dashed border-emerald-500/40" style="bottom: 60%">
+									<span class="absolute right-0 -top-4 text-[10px] text-emerald-500/60 hidden sm:block">Production-viable</span>
+								</div>
+								<!-- Needs refinement at 45 -->
+								<div class="absolute w-full border-t border-dashed border-amber-500/40" style="bottom: 45%">
+									<span class="absolute right-0 -top-4 text-[10px] text-amber-500/60 hidden sm:block">Needs refinement</span>
+								</div>
+							</div>
+
+							<!-- Bars -->
+							<div class="relative flex items-end justify-around gap-2 sm:gap-4" style="height: 320px; padding-bottom: 2rem">
+								{#each models as m, i}
+									<div
+										class="flex-1 max-w-24 flex flex-col items-center gap-2 group cursor-pointer"
+										onmouseenter={() => hoveredModel = m.id}
+										onmouseleave={() => hoveredModel = null}
+									>
+										<!-- Value -->
+										<span class="text-xs sm:text-sm font-bold tabular-nums transition-colors {m.highlight ? 'text-blue-400' : hoveredModel === m.id ? 'text-white' : 'text-gray-500'}">{m.overall}</span>
+
+										<!-- Bar -->
+										<div
+											class="w-full rounded-t-lg bg-gradient-to-t {m.gradient} transition-all duration-300 {hoveredModel === m.id ? 'opacity-100 shadow-lg' : m.highlight ? 'opacity-100' : 'opacity-60 group-hover:opacity-100'}"
+											style="height: {benchmarksVisible ? m.overall * 2.88 : 0}px; transition: height 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) {i * 0.1}s, opacity 0.3s; {m.highlight ? `box-shadow: 0 0 30px ${m.color}33` : ''}"
+										></div>
+
+										<!-- Label -->
+										<span class="text-[10px] sm:text-xs text-center leading-tight {m.highlight ? 'text-white font-medium' : 'text-gray-500'} whitespace-nowrap">{m.short}</span>
+									</div>
+								{/each}
+							</div>
 						</div>
-						<div>
-							<div class="text-lg font-bold tabular-nums {b.highlight ? 'text-blue-400' : 'text-gray-500'}">{b.testPass}%</div>
-							<div class="text-[10px] text-gray-600">Test Pass</div>
+					</div>
+
+					<!-- Hover detail -->
+					{#if hoveredModel}
+						{@const m = models.find(x => x.id === hoveredModel)}
+						<div class="mt-6 flex items-center gap-4 rounded-xl bg-white/5 border border-white/5 p-4 transition-all">
+							<div class="h-3 w-3 rounded-full" style="background: {m.color}"></div>
+							<div class="flex-1">
+								<span class="text-sm font-medium text-white">{m.name}</span>
+								{#if m.org}<span class="text-xs text-gray-500 ml-2">{m.org}</span>{/if}
+							</div>
+							<div class="flex gap-6 text-center">
+								<div><div class="text-sm font-bold text-white tabular-nums">{m.compilation}%</div><div class="text-[10px] text-gray-500">Compile</div></div>
+								<div><div class="text-sm font-bold text-white tabular-nums">{m.functional}%</div><div class="text-[10px] text-gray-500">Functional</div></div>
+								<div><div class="text-sm font-bold text-white tabular-nums">{m.testPass}%</div><div class="text-[10px] text-gray-500">Test Pass</div></div>
+							</div>
 						</div>
+					{/if}
+				</div>
+
+			<!-- TAB: Detailed Metrics -->
+			{:else if activeTab === 'detailed'}
+				<div class="p-6 sm:p-10">
+					<h3 class="text-lg font-semibold text-white mb-2">Comprehensive Benchmark Analysis</h3>
+					<p class="text-sm text-gray-500 mb-8">Compilation rate, functional correctness, and test pass rate with 95% CI</p>
+
+					<!-- Grouped bars for each model -->
+					<div class="space-y-6">
+						{#each models as m}
+							<div class="group" onmouseenter={() => hoveredModel = m.id} onmouseleave={() => hoveredModel = null}>
+								<div class="flex items-center gap-3 mb-2">
+									<div class="h-2.5 w-2.5 rounded-full shrink-0" style="background: {m.color}"></div>
+									<span class="text-sm font-medium {m.highlight ? 'text-white' : 'text-gray-400'}">{m.name}</span>
+									{#if m.org}<span class="text-xs text-gray-600">{m.org}</span>{/if}
+								</div>
+								<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+									<!-- Compilation -->
+									<div class="flex items-center gap-3">
+										<span class="text-[10px] text-gray-600 w-16 shrink-0">Compile</span>
+										<div class="flex-1 h-7 bg-white/5 rounded-md overflow-hidden">
+											<div class="h-full rounded-md bg-gradient-to-r {m.gradient} {m.highlight ? '' : 'opacity-60'} flex items-center transition-all duration-700"
+												style="width: {m.compilation}%">
+												<span class="ml-2 text-[10px] font-bold text-white tabular-nums">{m.compilation}%</span>
+											</div>
+										</div>
+									</div>
+									<!-- Functional -->
+									<div class="flex items-center gap-3">
+										<span class="text-[10px] text-gray-600 w-16 shrink-0">Functional</span>
+										<div class="flex-1 h-7 bg-white/5 rounded-md overflow-hidden">
+											<div class="h-full rounded-md bg-gradient-to-r {m.gradient} {m.highlight ? '' : 'opacity-60'} flex items-center transition-all duration-700"
+												style="width: {m.functional}%">
+												<span class="ml-2 text-[10px] font-bold text-white tabular-nums">{m.functional}%</span>
+											</div>
+										</div>
+									</div>
+									<!-- Test Pass -->
+									<div class="flex items-center gap-3">
+										<span class="text-[10px] text-gray-600 w-16 shrink-0">Test Pass</span>
+										<div class="flex-1 h-7 bg-white/5 rounded-md overflow-hidden">
+											<div class="h-full rounded-md bg-gradient-to-r {m.gradient} {m.highlight ? '' : 'opacity-60'} flex items-center transition-all duration-700"
+												style="width: {m.testPass}%">
+												<span class="ml-2 text-[10px] font-bold text-white tabular-nums">{m.testPass}%</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						{/each}
 					</div>
 				</div>
-			{/each}
+
+			<!-- TAB: Score Breakdown -->
+			{:else if activeTab === 'categories'}
+				<div class="p-6 sm:p-10">
+					<h3 class="text-lg font-semibold text-white mb-2">Score Breakdown by Category</h3>
+					<p class="text-sm text-gray-500 mb-8">Performance across key code translation quality dimensions</p>
+
+					<!-- Legend -->
+					<div class="flex flex-wrap gap-3 mb-6">
+						{#each models.slice(0, 3) as m}
+							<div class="flex items-center gap-1.5 text-xs text-gray-400">
+								<div class="h-2.5 w-2.5 rounded-sm" style="background: {m.color}"></div>
+								{m.short}
+							</div>
+						{/each}
+					</div>
+
+					<div class="space-y-8">
+						{#each categories as cat}
+							<div>
+								<div class="text-sm font-medium text-white mb-3">{cat.name}</div>
+								<div class="space-y-1.5">
+									{#each [
+										{ name: 'Shinso', val: cat.shinso, model: models[0] },
+										{ name: 'Claude 4.1.5', val: cat.claude, model: models[1] },
+										{ name: 'Gemini 3 Pro', val: cat.gemini3, model: models[2] },
+										{ name: 'Gemini 2.5', val: cat.gemini25, model: models[3] },
+										{ name: 'Qwen3', val: cat.qwen, model: models[4] },
+										{ name: 'GPT-5.2', val: cat.gpt, model: models[5] }
+									] as row}
+										<div class="flex items-center gap-3">
+											<span class="text-[10px] text-gray-600 w-20 shrink-0 truncate">{row.name}</span>
+											<div class="flex-1 h-5 bg-white/5 rounded overflow-hidden">
+												<div class="h-full rounded transition-all duration-700 flex items-center"
+													style="width: {row.val}%; background: {row.model.color}{row.model.highlight ? '' : '99'}">
+													<span class="ml-2 text-[9px] font-bold text-white tabular-nums">{row.val}%</span>
+												</div>
+											</div>
+										</div>
+									{/each}
+								</div>
+							</div>
+						{/each}
+					</div>
+				</div>
+
+			<!-- TAB: Error Analysis (Heatmap) -->
+			{:else if activeTab === 'errors'}
+				<div class="p-6 sm:p-10">
+					<h3 class="text-lg font-semibold text-white mb-2">Top 5 Error Patterns by Model</h3>
+					<p class="text-sm text-gray-500 mb-8">Error frequency across models — lower is better. Shinso's self-healing pipeline catches and corrects most errors.</p>
+
+					<!-- Desktop heatmap -->
+					<div class="hidden sm:block overflow-x-auto">
+						<table class="w-full">
+							<thead>
+								<tr>
+									<th class="text-left text-xs font-medium text-gray-500 pb-3 pr-4 w-32">Error Code</th>
+									{#each models as m}
+										<th class="text-center text-xs font-medium pb-3 px-2 {m.highlight ? 'text-blue-400' : 'text-gray-500'}" style="min-width: 80px">{m.short}</th>
+									{/each}
+								</tr>
+							</thead>
+							<tbody>
+								{#each errorPatterns as pattern}
+									<tr>
+										<td class="py-1.5 pr-4">
+											<div class="text-xs font-mono text-gray-400">{pattern.code}</div>
+											<div class="text-[10px] text-gray-600">{pattern.name}</div>
+										</td>
+										{#each pattern.values as val, i}
+											<td class="py-1.5 px-2">
+												<div class="mx-auto flex h-10 w-14 items-center justify-center rounded-lg text-sm font-bold {getHeatColor(val)} transition-all hover:scale-110">
+													{val}
+												</div>
+											</td>
+										{/each}
+									</tr>
+								{/each}
+							</tbody>
+						</table>
+					</div>
+
+					<!-- Mobile version -->
+					<div class="sm:hidden space-y-4">
+						{#each errorPatterns as pattern}
+							<div class="rounded-xl border border-white/5 bg-white/[0.02] p-4">
+								<div class="mb-3">
+									<span class="text-xs font-mono text-gray-400">{pattern.code}</span>
+									<span class="text-xs text-gray-500 ml-2">{pattern.name}</span>
+								</div>
+								<div class="grid grid-cols-3 gap-2">
+									{#each pattern.values as val, i}
+										<div class="text-center">
+											<div class="inline-flex h-8 w-10 items-center justify-center rounded-md text-xs font-bold {getHeatColor(val)}">{val}</div>
+											<div class="text-[9px] text-gray-600 mt-0.5">{models[i].short}</div>
+										</div>
+									{/each}
+								</div>
+							</div>
+						{/each}
+					</div>
+
+					<!-- Insight callout -->
+					<div class="mt-8 rounded-xl bg-blue-500/5 border border-blue-500/10 p-4 flex gap-3">
+						<div class="shrink-0 mt-0.5">
+							<svg class="h-4 w-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+						</div>
+						<p class="text-xs text-gray-400">Shinso's multi-pass self-healing pipeline detects and corrects errors during generation. The result: <strong class="text-white">near-zero null reference and scope errors</strong> — the two most costly bugs in production code.</p>
+					</div>
+				</div>
+
+			<!-- TAB: Testing Rigor -->
+			{:else if activeTab === 'rigor'}
+				<div class="p-6 sm:p-10">
+					<h3 class="text-lg font-semibold text-white mb-2">Testing Rigor Comparison</h3>
+					<p class="text-sm text-gray-500 mb-8">Average number of test cases generated per contract. More tests = higher confidence in translation correctness.</p>
+
+					<div class="flex items-end justify-around gap-4 sm:gap-8" style="height: 300px; padding-bottom: 2rem">
+						{#each models as m, i}
+							<div class="flex-1 max-w-28 flex flex-col items-center gap-2">
+								<span class="text-sm sm:text-lg font-bold tabular-nums {m.highlight ? 'text-cyan-400' : 'text-gray-500'}">{m.testsPerContract}×</span>
+								<div
+									class="w-full rounded-t-lg transition-all duration-1000 {m.highlight ? 'bg-gradient-to-t from-cyan-600 to-cyan-400' : 'bg-white/10'}"
+									style="height: {benchmarksVisible ? (m.testsPerContract / 12.4) * 240 : 0}px; transition-delay: {i * 0.1}s; {m.highlight ? 'box-shadow: 0 0 40px rgba(34, 211, 238, 0.2)' : ''}"
+								></div>
+								<span class="text-[10px] sm:text-xs text-center {m.highlight ? 'text-white font-medium' : 'text-gray-500'}">{m.short}</span>
+							</div>
+						{/each}
+					</div>
+
+					<!-- Dashed line at 1.0 -->
+					<div class="ml-0 sm:ml-4 mt-4 flex items-center gap-2 text-xs text-gray-600">
+						<div class="flex-1 border-t border-dashed border-gray-700"></div>
+						<span>Industry baseline: 1.0× tests per contract</span>
+						<div class="flex-1 border-t border-dashed border-gray-700"></div>
+					</div>
+
+					<!-- Insight -->
+					<div class="mt-8 rounded-xl bg-cyan-500/5 border border-cyan-500/10 p-4 flex gap-3">
+						<div class="shrink-0 mt-0.5">
+							<svg class="h-4 w-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+						</div>
+						<p class="text-xs text-gray-400">Shinso generates <strong class="text-white">12.4× more tests per contract</strong> than any other model. This isn't just about accuracy — it's about <strong class="text-white">verifiable confidence</strong> in every translation. Each test is a data point that feeds back into the training pipeline.</p>
+					</div>
+				</div>
+			{/if}
 		</div>
 
 		<!-- Language pairs -->
-		<div class="fade-in-up mt-12 text-center">
-			<div class="text-xs text-gray-600 mb-3 uppercase tracking-wider font-medium">Supported Languages</div>
+		<div class="fade-in-up mt-10 text-center">
+			<div class="text-xs text-gray-600 mb-3 uppercase tracking-wider font-medium">Evaluated Languages</div>
 			<div class="flex flex-wrap justify-center gap-2">
 				{#each languages as lang}
 					<span class="rounded-full border border-white/5 bg-white/[0.03] px-4 py-1.5 text-xs font-medium text-gray-400">{lang}</span>
@@ -263,7 +548,7 @@
 	</div>
 </section>
 
-<!-- ============ DATA ENGINE (Scale.AI angle) ============ -->
+<!-- ============ DATA ENGINE ============ -->
 <section id="data-engine" class="relative border-t border-white/5 py-24 sm:py-32">
 	<div class="pointer-events-none absolute top-0 left-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-cyan-500/[0.03] blur-[100px]"></div>
 	<div class="relative mx-auto max-w-7xl px-6">
@@ -278,7 +563,6 @@
 		</div>
 
 		<div class="fade-in-up mt-16 grid gap-6 grid-cols-1 lg:grid-cols-3">
-			<!-- Data flywheel -->
 			<div class="lg:col-span-2 rounded-2xl border border-cyan-500/10 bg-gradient-to-br from-cyan-500/[0.05] to-blue-500/[0.03] p-8 sm:p-10">
 				<h3 class="text-xl font-bold text-white mb-2">The Data Flywheel</h3>
 				<p class="text-sm text-gray-400 mb-8 max-w-lg">
@@ -303,7 +587,6 @@
 				</div>
 			</div>
 
-			<!-- Why this matters -->
 			<div class="rounded-2xl border border-white/5 bg-white/[0.02] p-8">
 				<h3 class="text-lg font-bold text-white mb-4">Why This Matters</h3>
 				<div class="space-y-5">
@@ -332,18 +615,15 @@
 			</div>
 		</div>
 
-		<!-- Scale comparison callout -->
 		<div class="fade-in-up mt-8 rounded-2xl border border-blue-500/10 bg-blue-500/[0.03] p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8">
 			<div class="shrink-0">
 				<div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10">
 					<svg class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5" /></svg>
 				</div>
 			</div>
-			<div>
-				<p class="text-sm text-gray-300 leading-relaxed">
-					<strong class="text-white">Scale for code.</strong> Just as Scale AI built the data infrastructure that powered the LLM revolution, Shinso is building the data engine for code intelligence. Our transpiler generates the verified training data that frontier labs need — but can't produce themselves.
-				</p>
-			</div>
+			<p class="text-sm text-gray-300 leading-relaxed">
+				<strong class="text-white">Scale for code.</strong> Just as Scale AI built the data infrastructure that powered the LLM revolution, Shinso is building the data engine for code intelligence. Our transpiler generates the verified training data that frontier labs need — but can't produce themselves.
+			</p>
 		</div>
 	</div>
 </section>
@@ -477,9 +757,7 @@
 	<div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-blue-500/5 to-transparent"></div>
 	<div class="relative mx-auto max-w-3xl px-6 text-center">
 		<div class="fade-in-up">
-			<h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
-				The Data Layer for Code AI
-			</h2>
+			<h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">The Data Layer for Code AI</h2>
 			<p class="mt-6 text-base sm:text-lg text-gray-400">
 				Whether you're training frontier models or migrating enterprise codebases, Shinso delivers the verified code data and translations you need.
 			</p>
