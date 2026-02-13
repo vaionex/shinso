@@ -208,7 +208,7 @@
 			<div class="mb-4 text-sm font-semibold uppercase tracking-wider text-cyan-400">Pricing</div>
 			<h2 class="text-3xl sm:text-4xl font-bold text-white">Dataset Calculator</h2>
 			<p class="mt-4 text-gray-400 max-w-xl mx-auto">
-				Commission custom code datasets: verified, production-grade translations that have never been seen on GitHub or public repositories. Purpose-built training data for your models.
+				Commission custom code datasets: verified, production-grade translations that have never been seen on GitHub or public repositories. Training data built to your spec.
 			</p>
 		</div>
 
@@ -333,7 +333,7 @@
 
 				<!-- What's included -->
 				<div class="rounded-2xl border border-white/5 bg-white/[0.02] p-6">
-					<div class="text-sm font-medium text-white mb-4">Every dataset includes</div>
+					<div class="text-sm font-medium text-white mb-4">Included with every dataset</div>
 					<div class="space-y-3">
 						{#each [
 							'Novel code, never on GitHub or public repos',

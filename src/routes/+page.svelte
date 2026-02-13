@@ -93,7 +93,7 @@
 	<meta name="description" content="Shinso's agentic code transpiler achieves 73.9% accuracy, 3.5x better than GPT. We generate production-viable code translations at scale to power the next generation of AI models." />
 	<!-- Open Graph -->
 	<meta property="og:title" content="Shinso AI — The Data Engine for Code Intelligence" />
-	<meta property="og:description" content="73.9% functional correctness. 3.5× better than GPT. The only AI producing production-viable code translations." />
+	<meta property="og:description" content="73.9% functional correctness. 3.5× better than GPT. The only AI producing deployable code translations." />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://shinso.ai" />
 	<meta property="og:image" content="https://shinso.ai/og.png" />
@@ -105,7 +105,7 @@
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="Shinso AI — The Data Engine for Code Intelligence" />
-	<meta name="twitter:description" content="73.9% functional correctness. 3.5× better than GPT. The only AI producing production-viable code translations." />
+	<meta name="twitter:description" content="73.9% functional correctness. 3.5× better than GPT. The only AI producing deployable code translations." />
 	<meta name="twitter:image" content="https://shinso.ai/og.png" />
 	<meta name="twitter:site" content="@shinsoai" />
 	<!-- Additional -->
@@ -160,7 +160,7 @@
 		</h1>
 
 		<p class="fade-in-up mx-auto mt-8 max-w-2xl text-base leading-relaxed text-gray-400 sm:text-lg" class:visible={mounted} style="transition-delay: 0.2s">
-			Our agentic transpiler translates code between languages at <strong class="text-white">73.9% accuracy</strong>, outperforming GPT, Claude, Gemini, and Qwen. We generate production-viable code data at scale to train the next generation of frontier AI models.
+			Our agentic transpiler translates code between languages at <strong class="text-white">73.9% accuracy</strong>, outperforming GPT, Claude, Gemini, and Qwen. The resulting code data trains better AI models at scale.
 		</p>
 
 		<div class="fade-in-up mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row" class:visible={mounted} style="transition-delay: 0.3s">
@@ -220,7 +220,7 @@
 			<div class="rounded-2xl border border-blue-500/10 bg-blue-500/5 p-6 sm:p-8">
 				<div class="mb-3 text-3xl sm:text-4xl font-bold text-blue-400">18 mo</div>
 				<div class="text-sm font-medium text-blue-300">average migration timeline</div>
-				<p class="mt-3 text-sm text-gray-500">Enterprise migrations take months or years with current tooling, creating massive opportunity costs.</p>
+				<p class="mt-3 text-sm text-gray-500">Enterprise migrations take months or years with current tooling, creating significant delays and cost overruns.</p>
 			</div>
 		</div>
 	</div>
@@ -235,7 +235,7 @@
 				Shinso Beats GPT, Claude, Gemini & Qwen
 			</h2>
 			<p class="mt-6 text-base sm:text-lg text-gray-400">
-				Validated on <strong class="text-white">smart contract translation</strong>, among the most demanding code domains, where a single error can be catastrophic. Our <a href="https://arxiv.org/abs/2502.18515" target="_blank" rel="noopener" class="text-blue-400 hover:text-blue-300 underline underline-offset-2">peer-reviewed research</a> deliberately chose the hardest challenge to prove that Shinso's architecture generalizes across any language and complexity tier.
+				Validated on <strong class="text-white">smart contract translation</strong>, among the most demanding code domains, where a single error can be catastrophic. Our <a href="https://arxiv.org/abs/2502.18515" target="_blank" rel="noopener" class="text-blue-400 hover:text-blue-300 underline underline-offset-2">peer-reviewed research</a> chose the hardest possible domain to validate that the architecture generalizes to any language and complexity level.
 			</p>
 		</div>
 
@@ -586,12 +586,12 @@
 					<div class="rounded-xl bg-white/5 border border-white/5 p-5">
 						<div class="text-2xl font-bold text-cyan-400 mb-1">10M+</div>
 						<div class="text-sm font-medium text-white">Verified Code Pairs</div>
-						<div class="text-xs text-gray-500 mt-1">High-quality parallel translations across 15+ language pairs, each verified by compilation and test suites.</div>
+						<div class="text-xs text-gray-500 mt-1">Parallel translations across 15+ language pairs. Each pair verified by compilation and test suites.</div>
 					</div>
 					<div class="rounded-xl bg-white/5 border border-white/5 p-5">
 						<div class="text-2xl font-bold text-cyan-400 mb-1">94.2%</div>
 						<div class="text-sm font-medium text-white">Compilation Verified</div>
-						<div class="text-xs text-gray-500 mt-1">Every generated pair compiles. No garbage data. No hallucinated syntax. Production-grade signal only.</div>
+						<div class="text-xs text-gray-500 mt-1">All generated pairs compile. No garbage data. No hallucinated syntax. Clean signal only.</div>
 					</div>
 					<div class="rounded-xl bg-white/5 border border-white/5 p-5">
 						<div class="text-2xl font-bold text-cyan-400 mb-1">8</div>
@@ -623,7 +623,7 @@
 							<div class="h-1.5 w-1.5 rounded-full bg-purple-400"></div>
 							<span class="text-sm font-medium text-white">For Researchers</span>
 						</div>
-						<p class="text-sm text-gray-500 pl-3.5">Access the largest verified code translation dataset ever created. Purpose-built for advancing code intelligence.</p>
+						<p class="text-sm text-gray-500 pl-3.5">Access the largest verified code translation dataset ever created. Built for advancing code intelligence.</p>
 					</div>
 				</div>
 			</div>
@@ -636,7 +636,7 @@
 				</div>
 			</div>
 			<p class="text-sm text-gray-300 leading-relaxed">
-				<strong class="text-white">Scale for code.</strong> Just as Scale AI built the data infrastructure that powered the LLM revolution, Shinso is building the data engine for code intelligence. Our transpiler generates the verified training data that frontier labs need but can't produce themselves.
+				<strong class="text-white">Scale for code.</strong> Scale AI built the data infrastructure that powered the LLM revolution. Shinso is doing the same for code. Our transpiler generates verified training data that major labs need but can't produce internally.
 			</p>
 		</div>
 	</div>
@@ -649,7 +649,7 @@
 			<div class="mb-4 text-sm font-semibold uppercase tracking-wider text-blue-400">Technology</div>
 			<h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">The Shinso Transpiler</h2>
 			<p class="mt-6 text-base sm:text-lg text-gray-400">
-				A purpose-built agentic system that translates, verifies, and self-corrects code across languages, producing output that compiles, runs, and passes tests.
+				An agentic system that translates, verifies, and self-corrects code across languages. The output compiles, runs, and passes tests.
 			</p>
 		</div>
 
@@ -659,7 +659,7 @@
 					<svg class="h-5 w-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>
 				</div>
 				<h3 class="text-lg font-semibold text-white">Multi-Language Support</h3>
-				<p class="mt-3 text-sm leading-relaxed text-gray-400">Translate between Python, TypeScript, Rust, Go, C++, Java, Solidity, and Move with production-grade accuracy across 15+ language pairs.</p>
+				<p class="mt-3 text-sm leading-relaxed text-gray-400">Translate between Python, TypeScript, Rust, Go, C++, Java, Solidity, and Move with high accuracy across 15+ language pairs.</p>
 			</div>
 			<div class="group rounded-2xl border border-white/5 bg-white/[0.02] p-6 sm:p-8 transition-all hover:border-blue-500/20 hover:bg-blue-500/[0.03]">
 				<div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-blue-500/10">
@@ -673,14 +673,14 @@
 					<svg class="h-5 w-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375" /></svg>
 				</div>
 				<h3 class="text-lg font-semibold text-white">3 Years of Curated Training Data</h3>
-				<p class="mt-3 text-sm leading-relaxed text-gray-400">Proprietary training corpus built from 3 years of research at University of Houston. Purpose-built for code translation, not general-purpose web scrapes.</p>
+				<p class="mt-3 text-sm leading-relaxed text-gray-400">Proprietary training corpus built from 3 years of research at University of Houston. Designed specifically for code translation, not general-purpose web scrapes.</p>
 			</div>
 			<div class="group rounded-2xl border border-white/5 bg-white/[0.02] p-6 sm:p-8 transition-all hover:border-blue-500/20 hover:bg-blue-500/[0.03]">
 				<div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-blue-500/10">
 					<svg class="h-5 w-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
 				</div>
 				<h3 class="text-lg font-semibold text-white">Automated Test Generation</h3>
-				<p class="mt-3 text-sm leading-relaxed text-gray-400">Every translation ships with generated test suites. Verify functional equivalence automatically before deployment. No manual QA required.</p>
+				<p class="mt-3 text-sm leading-relaxed text-gray-400">Translations ship with generated test suites that verify functional equivalence automatically. No manual QA.</p>
 			</div>
 		</div>
 
@@ -714,7 +714,7 @@
 			<div class="mb-4 text-sm font-semibold uppercase tracking-wider text-indigo-400">Architecture</div>
 			<h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">Roadmap to 99% Accuracy</h2>
 			<p class="mt-6 text-base sm:text-lg text-gray-400 leading-relaxed">
-				3 years of competitive advantage. A multi-stage agentic pipeline that combines specialized models, formal verification, and reinforcement learning. Each layer compounds accuracy.
+				3 years of R&D. A multi-stage pipeline combining specialized models, formal verification, and reinforcement learning, where each layer compounds the accuracy of the last.
 			</p>
 		</div>
 
@@ -759,7 +759,7 @@
 					</div>
 					<h3 class="text-lg font-semibold text-white">Formal Verification</h3>
 				</div>
-				<p class="text-sm text-gray-400 mb-6">Every translation is verified through multiple independent signals, not just "does it look right."</p>
+				<p class="text-sm text-gray-400 mb-6">Translations are verified through multiple independent signals, not surface-level pattern matching.</p>
 				<div class="space-y-3">
 					{#each [
 						{ step: 'AST & Type Analysis', desc: 'Deep structural parsing of source code' },
@@ -789,7 +789,7 @@
 					</div>
 					<h3 class="text-lg font-semibold text-white">Accuracy Roadmap</h3>
 				</div>
-				<p class="text-sm text-gray-400 mb-6">6 months from production. Each milestone compounds on the last.</p>
+				<p class="text-sm text-gray-400 mb-6">6 months to production. Each milestone builds on the last.</p>
 
 				<!-- Milestone bars -->
 				<div class="space-y-4">
@@ -835,7 +835,7 @@
 				</div>
 			</div>
 			<p class="text-sm text-gray-300 leading-relaxed">
-				<strong class="text-white">Why this can't be replicated.</strong> Shinso's architecture isn't a prompt wrapper. It's a vertically integrated system of specialized models, proprietary training data, and formal verification built over 3 years. Each layer reinforces the next. Competitors would need to rebuild the entire stack from scratch.
+				<strong class="text-white">Why this can't be replicated.</strong> Shinso's architecture isn't a prompt wrapper. It's a vertically integrated system of specialized models, proprietary training data, and formal verification built over 3 years. Each layer reinforces the next. Replicating this requires rebuilding the entire stack.
 			</p>
 		</div>
 	</div>
@@ -846,7 +846,7 @@
 	<div class="mx-auto max-w-7xl px-6">
 		<div class="fade-in-up mx-auto max-w-3xl text-center">
 			<div class="mb-4 text-sm font-semibold uppercase tracking-wider text-blue-400">Team</div>
-			<h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">World-Class Researchers</h2>
+			<h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">Leadership</h2>
 			<p class="mt-6 text-base sm:text-lg text-gray-400">
 				Multi-exited founders backed by 3 years of dedicated AI research at the University of Houston.
 			</p>
@@ -886,21 +886,21 @@
 					<svg class="h-7 w-7 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" /></svg>
 				</div>
 				<h3 class="text-base sm:text-lg font-semibold text-white">ACM Distinguished Paper</h3>
-				<p class="mt-2 text-sm text-gray-400">Distinguished Paper of the Year 2025, awarded by ACM for demonstrating state-of-the-art results on the most rigorous code translation benchmarks.</p>
+				<p class="mt-2 text-sm text-gray-400">Distinguished Paper of the Year 2025, awarded by ACM for demonstrating breakthrough results on the most rigorous code translation benchmarks.</p>
 			</div>
 			<div class="rounded-2xl border border-white/5 bg-white/[0.02] p-6 sm:p-8 text-center">
 				<div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white/5">
 					<svg class="h-7 w-7 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342" /></svg>
 				</div>
 				<h3 class="text-base sm:text-lg font-semibold text-white">University of Houston</h3>
-				<p class="mt-2 text-sm text-gray-400">3 years of dedicated AI research partnership advancing the state of the art in code translation.</p>
+				<p class="mt-2 text-sm text-gray-400">3 years of dedicated AI research partnership advancing code translation research.</p>
 			</div>
 			<div class="rounded-2xl border border-white/5 bg-white/[0.02] p-6 sm:p-8 text-center">
 				<div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white/5">
 					<svg class="h-7 w-7 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" /></svg>
 				</div>
 				<h3 class="text-base sm:text-lg font-semibold text-white">Backed by Leading Investors</h3>
-				<p class="mt-2 text-sm text-gray-400">Supported by top-tier investors who believe in the future of AI-powered code intelligence and data infrastructure.</p>
+				<p class="mt-2 text-sm text-gray-400">Backed by investors with deep expertise in AI infrastructure and developer tools.</p>
 			</div>
 		</div>
 	</div>
