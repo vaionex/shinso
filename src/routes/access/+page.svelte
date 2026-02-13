@@ -58,6 +58,7 @@
 
 <svelte:head>
 	<title>Get Access — Shinso AI</title>
+	<link rel="icon" type="image/svg+xml" href="/icon.svg" />
 	<meta name="description" content="Request early access to Shinso's AI code translation platform. Learn about our approval process and start translating code at production-grade accuracy." />
 </svelte:head>
 
@@ -65,10 +66,8 @@
 <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#050508]/80 backdrop-blur-xl">
 	<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
 		<a href="/" class="flex items-center gap-2.5">
-			<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400">
-				<span class="text-sm font-extrabold text-white">S</span>
-			</div>
-			<span class="text-lg font-bold text-white tracking-tight">shinso</span>
+			<img src="/icon.svg" alt="Shinso" class="h-8 w-8" />
+			<span class="text-lg font-bold text-white tracking-tight">Shinso</span>
 		</a>
 		<div class="flex items-center gap-6">
 			<a href="/" class="text-[13px] text-gray-400 transition-colors hover:text-white hidden sm:block">← Back to Home</a>
@@ -318,8 +317,7 @@
 <footer class="border-t border-white/5 py-8 sm:py-12">
 	<div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
 		<div class="flex items-center gap-2.5">
-			<div class="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-blue-500 to-cyan-400">
-				<span class="text-[10px] font-extrabold text-white">S</span>
+			<img src="/icon.svg" alt="Shinso" class="h-6 w-6" />
 			</div>
 			<span class="text-sm font-semibold text-gray-500">Shinso AI</span>
 		</div>

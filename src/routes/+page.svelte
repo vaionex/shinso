@@ -89,6 +89,7 @@
 
 <svelte:head>
 	<title>Shinso AI — The Data Engine for Code Intelligence</title>
+	<link rel="icon" type="image/svg+xml" href="/icon.svg" />
 	<meta name="description" content="Shinso's agentic code transpiler achieves 73.9% accuracy — 3.5x better than GPT. We generate production-viable code translations at scale to power the next generation of AI models." />
 	<meta property="og:title" content="Shinso AI — The Data Engine for Code Intelligence" />
 	<meta property="og:description" content="73.9% functional correctness. 3.5× better than GPT. The only AI producing production-viable code translations." />
@@ -100,10 +101,8 @@
 <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#050508]/80 backdrop-blur-xl">
 	<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
 		<a href="/" class="flex items-center gap-2.5">
-			<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400">
-				<span class="text-sm font-extrabold text-white">S</span>
-			</div>
-			<span class="text-lg font-bold text-white tracking-tight">shinso</span>
+			<img src="/icon.svg" alt="Shinso" class="h-8 w-8" />
+			<span class="text-lg font-bold text-white tracking-tight">Shinso</span>
 		</a>
 		<div class="hidden items-center gap-8 md:flex">
 			{#each navItems as item}
@@ -918,9 +917,7 @@
 <footer class="border-t border-white/5 py-8 sm:py-12">
 	<div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
 		<div class="flex items-center gap-2.5">
-			<div class="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-blue-500 to-cyan-400">
-				<span class="text-[10px] font-extrabold text-white">S</span>
-			</div>
+			<img src="/icon.svg" alt="Shinso" class="h-6 w-6" />
 			<span class="text-sm font-semibold text-gray-500">Shinso AI</span>
 		</div>
 		<p class="text-xs text-gray-600">© 2025 Shinso AI, Inc. All rights reserved.</p>
