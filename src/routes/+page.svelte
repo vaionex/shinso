@@ -4,7 +4,7 @@
 	let mounted = $state(false);
 	let mobileMenuOpen = $state(false);
 	let activeTab = $state('overview');
-	let hoveredModel = $state(null);
+	let hoveredModel = $state('shinso');
 	let benchmarksVisible = $state(false);
 
 	onMount(() => {
@@ -314,7 +314,7 @@
 									<div
 										role="group" class="flex-1 max-w-24 flex flex-col items-center gap-2 group cursor-pointer"
 										onmouseenter={() => hoveredModel = m.id}
-										onmouseleave={() => hoveredModel = null}
+										onmouseleave={() => hoveredModel = 'shinso'}
 									>
 										<!-- Value -->
 										<span class="text-xs sm:text-sm font-bold tabular-nums transition-colors {m.highlight ? 'text-blue-400' : hoveredModel === m.id ? 'text-white' : 'text-gray-500'}">{m.overall}</span>
@@ -360,7 +360,7 @@
 					<!-- Grouped bars for each model -->
 					<div class="space-y-6">
 						{#each models as m}
-							<div role="group" class="group" onmouseenter={() => hoveredModel = m.id} onmouseleave={() => hoveredModel = null}>
+							<div role="group" class="group" onmouseenter={() => hoveredModel = m.id} onmouseleave={() => hoveredModel = 'shinso'}>
 								<div class="flex items-center gap-3 mb-2">
 									<div class="h-2.5 w-2.5 rounded-full shrink-0" style="background: {m.color}"></div>
 									<span class="text-sm font-medium {m.highlight ? 'text-white' : 'text-gray-400'}">{m.name}</span>
